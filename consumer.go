@@ -87,11 +87,9 @@ type AMQPConsumer struct {
 }
 
 func (c *AMQPConsumer) Run(ctx context.Context) error {
-	fmt.Println(111)
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	done := make(chan error, 1)
-	fmt.Println(222)
 
 	sess, returnFn, err := Borrow(ctx, c.Bind)
 	if err != nil {
@@ -113,8 +111,6 @@ func (c *AMQPConsumer) Run(ctx context.Context) error {
 			return err
 		}
 	}
-
-	fmt.Println(3333)
 
 	deliveries, err := sess.Channel.Consume(
 		c.Subscription.GetQueue(), // name
